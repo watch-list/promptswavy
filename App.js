@@ -320,7 +320,7 @@ function App() {
               sharePromptLink(prompt);
             },
             className:
-              "flex-1 flex items-center justify-center gap-2 rounded-full bg-white/5 border border-white/15 text-white/80 hover:bg.white hover:text-black transition-all py-2 active:scale-95"
+              "flex-1 flex items-center justify-center gap-2 rounded-full bg-white/5 border border-white/15 text-white/80 hover:bg-white hover:text-black transition-all py-2 active:scale-95"
           },
           h(Share2, { size: 14 }),
           "Share"
@@ -399,7 +399,7 @@ function App() {
             { className: "space-y-1" },
             h(
               "label",
-              { className: "text-xs text.white/50" },
+              { className: "text-xs text-white/50" },
               "Title"
             ),
             h("input", {
@@ -573,12 +573,12 @@ function App() {
               { className: "mb-4" },
               h(
                 "div",
-                { className: "flex items.center gap-2 mb-2" },
+                { className: "flex items-center gap-2 mb-2" },
                 h(
                   "span",
                   {
                     className:
-                      "px-3 py-1 rounded-full bg.white text-black text-[10px] font-bold uppercase tracking-[0.2em]"
+                      "px-3 py-1 rounded-full bg-white text-black text-[10px] font-bold uppercase tracking-[0.2em]"
                   },
                   data.category || "NanoBanana"
                 )
@@ -701,7 +701,7 @@ function App() {
           {
             onClick: openAddModal,
             className:
-              "flex items-center gap-2 px-4 py-2 md:px-5 md:py-2.5 rounded-full bg.white text-black font-bold text-[10px] md:text-xs uppercase tracking-wider hover:bg-[#5C5CFF] hover:text.white transition-all duration-300 shadow-[0_0_15px_rgba(255,255,255,0.3)] active:scale-95 touch-manipulation"
+              "flex items-center gap-2 px-4 py-2 md:px-5 md:py-2.5 rounded-full bg-white text-black font-bold text-[10px] md:text-xs uppercase tracking-wider hover:bg-[#5C5CFF] hover:text-white transition-all duration-300 shadow-[0_0_15px_rgba(255,255,255,0.3)] active:scale-95 touch-manipulation"
           },
           h(Plus, { size: 14, strokeWidth: 3, className: "md:w-4 md:h-4" }),
           h("span", null, "Add", h("span", { className: "hidden sm:inline" }, " Prompt"))
@@ -742,8 +742,8 @@ function App() {
                     className:
                       "px-4 md:px-5 py-2 md:py-2.5 rounded-full text-[11px] md:text-xs font-bold uppercase tracking-widest whitespace-nowrap transition-all duration-300 flex-shrink-0 touch-manipulation " +
                       (activeCategory === cat
-                        ? "bg.white text-black shadow-[0_0_20px_-5px_rgba(255,255,255,0.5)]"
-                        : "bg-white/5 text-white/50 hover:bg.white/10 hover:text.white")
+                        ? "bg-white text-black shadow-[0_0_20px_-5px_rgba(255,255,255,0.5)]"
+                        : "bg-white/5 text-white/50 hover:bg-white/10 hover:text-white")
                   },
                   cat
                 )
@@ -763,7 +763,7 @@ function App() {
               h(Search, {
                 size: 16,
                 className:
-                  "text.white/30 group-focus-within:text-[#5C5CFF] transition-colors"
+                  "text-white/30 group-focus-within:text-[#5C5CFF] transition-colors"
               })
             ),
             h("input", {
@@ -772,7 +772,7 @@ function App() {
               onChange: (e) => setSearchQuery(e.target.value),
               placeholder: "Search prompts...",
               className:
-                "w-full bg-white/5 border border.white/10 text.white rounded-full pl-10 pr-4 py-2.5 text-sm focus:outline-none focus:bg.white/10 focus:border-[#5C5CFF]/50 transition-all placeholder:text.white/20 appearance-none"
+                "w-full bg-white/5 border border-white/10 text-white rounded-full pl-10 pr-4 py-2.5 text-sm focus:outline-none focus:bg-white/10 focus:border-[#5C5CFF]/50 transition-all placeholder:text-white/20 appearance-none"
             })
           )
         ),
@@ -783,29 +783,29 @@ function App() {
               "div",
               {
                 className:
-                  "flex flex-col items.center justify-center py-16 md:py-20 text-center"
+                  "flex flex-col items-center justify-center py-16 md:py-20 text-center"
               },
               h(
                 "div",
                 {
                   className:
-                    "w-20 h-20 md:w-24 md:h-24 rounded-full bg.white/5 border border.white/10 flex items.center justify-center mb-6"
+                    "w-20 h-20 md:w-24 md:h-24 rounded-full bg-white/5 border border-white/10 flex items-center justify-center mb-6"
                 },
                 searchQuery
                   ? h(Search, {
                       size: 28,
-                      className: "text.white/20 md:w-8 md:h-8"
+                      className: "text-white/20 md:w-8 md:h-8"
                     })
                   : h(Plus, {
                       size: 28,
-                      className: "text.white/20 md:w-8 md:h-8"
+                      className: "text-white/20 md:w-8 md:h-8"
                     })
               ),
               h(
                 "h2",
                 {
                   className:
-                    "text-lg md:text-xl font-display text.white/80 mb-2"
+                    "text-lg md:text-xl font-display text-white/80 mb-2"
                 },
                 searchQuery
                   ? `No results for "${searchQuery}"`
@@ -817,7 +817,7 @@ function App() {
                 "p",
                 {
                   className:
-                    "text.white/40 max-w-xs mx-auto mb-8 text-sm md:text-base"
+                    "text-white/40 max-w-xs mx-auto mb-8 text-sm md:text-base"
                 },
                 searchQuery
                   ? "Try checking your spelling or use different keywords."
@@ -832,7 +832,7 @@ function App() {
                   {
                     onClick: openAddModal,
                     className:
-                      "text-[#5C5CFF] hover:text.white transition-colors text-sm font-bold uppercase tracking-wider p-2"
+                      "text-[#5C5CFF] hover:text-white transition-colors text-sm font-bold uppercase tracking-wider p-2"
                   },
                   "+ Add New Prompt"
                 )

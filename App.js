@@ -105,7 +105,6 @@ function App() {
       const hash = window.location.hash || "";
 
       if (hash.startsWith("#/share/")) {
-        // Shared read-only view
         const encoded = hash.split("#/share/")[1];
         const decoded = decodeShareData(encoded);
         if (decoded) {
@@ -115,7 +114,6 @@ function App() {
           window.location.hash = "";
         }
       } else if (hash.startsWith("#/view/")) {
-        // Owner full view
         const id = hash.split("#/view/")[1];
         const all = getPromptsFromStorage();
         setPrompts(all);
@@ -131,7 +129,6 @@ function App() {
           loadData();
         }
       } else {
-        // Gallery view
         setView("gallery");
         setSelectedPrompt(null);
         setSharedData(null);
@@ -140,7 +137,7 @@ function App() {
     }
 
     window.addEventListener("hashchange", handleHashChange);
-    handleHashChange(); // initial
+    handleHashChange();
 
     return () => window.removeEventListener("hashchange", handleHashChange);
   }, []);
@@ -215,11 +212,7 @@ function App() {
 
   async function copyPromptText(data) {
     if (!data || !data.prompt) return;
-    const ok = await copyToClipboard(data.prompt);
-    if (ok) {
-      // optional: toast-ish feeling
-      console.log("Prompt copied");
-    }
+    await copyToClipboard(data.prompt);
   }
 
   // ---------- Filters ----------
@@ -242,6 +235,7 @@ function App() {
       "div",
       {
         key: prompt.id,
+        onClick: () => openPrompt(prompt), // 🔥 whole card clickable
         className:
           "relative group rounded-3xl bg-white/5 border border-white/10 overflow-hidden flex flex-col cursor-pointer hover:bg-white/7 hover:border-white/20 transition-all duration-300"
       },
@@ -296,12 +290,10 @@ function App() {
           "div",
           { className: "mt-auto flex items-center justify-between pt-1" },
           h(
-            "button",
+            "span",
             {
-              type: "button",
-              onClick: () => openPrompt(prompt),
               className:
-                "text-[11px] font-bold uppercase tracking-widest text-white/70 group-hover:text-white transition-colors"
+                "text-[11px] font-bold uppercase tracking-widest text-white/35"
             },
             "Open"
           ),
@@ -310,7 +302,7 @@ function App() {
             {
               type: "button",
               onClick: (e) => {
-                e.stopPropagation();
+                e.stopPropagation(); // 🔥 don’t open card when clicking edit
                 openEditModal(prompt);
               },
               className:
@@ -356,10 +348,10 @@ function App() {
       },
       h(
         "div",
-        {
-          className:
-            "max-w-md w-full rounded-3xl bg-[#050505] border border-white/10 p-5 md:p-6 shadow-[0_0_40px_rgba(0,0,0,0.7)]"
-        },
+          {
+            className:
+              "max-w-md w-full rounded-3xl bg-[#050505] border border-white/10 p-5 md:p-6 shadow-[0_0_40px_rgba(0,0,0,0.7)]"
+          },
         h(
           "div",
           { className: "flex items-center justify-between mb-4" },
@@ -385,7 +377,6 @@ function App() {
         h(
           "form",
           { className: "space-y-3", onSubmit },
-          // Title
           h(
             "div",
             { className: "space-y-1" },
@@ -402,7 +393,6 @@ function App() {
                 "w-full glass-input rounded-2xl px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-[#5C5CFF]/70 placeholder:text-white/30"
             })
           ),
-          // Category
           h(
             "div",
             { className: "space-y-1" },
@@ -426,7 +416,6 @@ function App() {
                 )
             )
           ),
-          // Image URL
           h(
             "div",
             { className: "space-y-1" },
@@ -443,7 +432,6 @@ function App() {
                 "w-full glass-input rounded-2xl px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-[#5C5CFF]/70 placeholder:text-white/30"
             })
           ),
-          // Prompt text
           h(
             "div",
             { className: "space-y-1" },
@@ -460,7 +448,6 @@ function App() {
                 "w-full glass-input rounded-2xl px-3 py-2.5 text-sm outline-none focus:ring-2 focus:ring-[#5C5CFF]/70 placeholder:text-white/30 min-h-[120px] resize-y"
             })
           ),
-          // Buttons
           h(
             "div",
             { className: "flex justify-end pt-1" },
@@ -484,7 +471,6 @@ function App() {
     if (!data) return null;
     const { isOwner, isShared } = options;
 
-    // Shared view: no back, no delete, no share button, only view + copy
     const showBack = isOwner && !isShared;
     const showShare = isOwner && !isShared;
 
@@ -494,7 +480,6 @@ function App() {
         className:
           "min-h-screen bg-[#050505] text-white selection:bg-[#5C5CFF] selection:text-white flex flex-col"
       },
-      // Top bar (optional back for owner)
       h(
         "header",
         {
@@ -516,7 +501,6 @@ function App() {
                 "← Back"
               )
             : h("div", null),
-          // Tiny top logo placeholder (like screenshot)
           h(
             "div",
             {
@@ -529,7 +513,6 @@ function App() {
         )
       ),
 
-      // Main card
       h(
         "main",
         { className: "flex-1 flex justify-center pb-8 px-4" },
@@ -539,7 +522,6 @@ function App() {
             className:
               "w-full max-w-md bg-black rounded-[32px] border border-white/10 overflow-hidden flex flex-col shadow-[0_0_40px_rgba(0,0,0,0.7)]"
           },
-          // Image 4:5
           h(
             "div",
             {
@@ -561,12 +543,9 @@ function App() {
                   "No image added"
                 )
           ),
-
-          // Content
           h(
             "div",
             { className: "flex-1 flex flex-col px-5 pb-5 pt-4" },
-            // Title + meta
             h(
               "div",
               { className: "mb-4" },
@@ -591,8 +570,6 @@ function App() {
                 data.title || "Untitled Prompt"
               )
             ),
-
-            // Scrollable prompt box
             h(
               "div",
               {
@@ -608,8 +585,6 @@ function App() {
                 data.prompt || ""
               )
             ),
-
-            // Buttons
             h(
               "div",
               { className: "mt-4 flex gap-3" },
@@ -636,20 +611,7 @@ function App() {
                   h(Share2, { size: 16 }),
                   "Share style"
                 )
-            ),
-            // Owner delete (only in owner full view, not shared)
-            isOwner &&
-              !isShared &&
-              h(
-                "button",
-                {
-                  type: "button",
-                  onClick: () => deletePrompt(data.id),
-                  className:
-                    "mt-3 text-[11px] text-red-300/80 hover:text-red-300 underline underline-offset-4 self-center"
-                },
-                "Delete from vault"
-              )
+            )
           )
         )
       ),
@@ -659,7 +621,6 @@ function App() {
 
   // ---------- View Switch ----------
   if (view === "shared" && sharedData) {
-    // Read-only: no back, no add, only full card + copy
     return renderFullView(sharedData, { isOwner: false, isShared: true });
   }
 
@@ -674,7 +635,6 @@ function App() {
       className:
         "min-h-screen bg-[#050505] text-white selection:bg-[#5C5CFF] selection:text-white"
     },
-    // Navbar
     h(
       "header",
       {
@@ -725,23 +685,18 @@ function App() {
         )
       )
     ),
-
-    // Main
     h(
       "main",
       { className: "pt-24 md:pt-28 pb-20 px-4 sm:px-6" },
       h(
         "div",
         { className: "max-w-7xl mx-auto" },
-
-        // Controls bar
         h(
           "div",
           {
             className:
               "flex flex-col-reverse md:flex-row md:items-center justify-between gap-4 md:gap-6 mb-8 md:mb-10"
           },
-          // Category tabs
           h(
             "div",
             { className: "w-full md:w-auto -mx-4 px-4 md:mx-0 md:px-0" },
@@ -768,8 +723,6 @@ function App() {
               )
             )
           ),
-
-          // Search
           h(
             "div",
             { className: "relative w-full md:w-72 shrink-0 group" },
@@ -795,8 +748,6 @@ function App() {
             })
           )
         ),
-
-        // Content
         filteredPrompts.length === 0
           ? h(
               "div",
